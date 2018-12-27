@@ -1,5 +1,8 @@
 package services;
 
+import data.MailAddress;
+import data.DigitalSignature;
+
 /**
  * External service for sending mails
  */

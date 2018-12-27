@@ -1,15 +1,16 @@
 package data;
 import Exception.WrongInputException;
+import services.MailerService;
 
 
 /**
  * The Mail of a person that participates in an election.
  */
 
-final public class MailAdress {
+final public class MailAddress {
     private final String mail;
 
-    public MailAdress(String mail) throws WrongInputException {
+    public MailAddress(String mail) throws WrongInputException {
         if (mail != null) {
             this.mail = mail;
         } else {
@@ -23,7 +24,7 @@ final public class MailAdress {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MailAdress mail1 = (MailAdress) o;
+        MailAddress mail1 = (MailAddress) o;
         return mail.equals(mail1.mail);
     }
 
@@ -34,4 +35,5 @@ final public class MailAdress {
     public String toString() {
         return "Mail{" + "mail='" + mail + '\'' + '}';
     }
+
 }

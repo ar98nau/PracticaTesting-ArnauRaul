@@ -40,6 +40,7 @@ public class VoteCounter {
         BigDecimal actual = votes.get(blankParty);
         votes.put(blankParty, actual.add(BigDecimal.ONE));
     }
+
     public void scrutinize(Party party) {
         if(party.getName()=="Blank"){
             countBlank();
