@@ -1,4 +1,5 @@
 package data;
+import Exception.WrongInputException;
 
 /**
  * The name of a party that participates in an election.
@@ -7,7 +8,13 @@ package data;
 final public class Party {
     private final String name;
 
-    public Party(String name) { this.name = name; }
+    public Party(String name) throws WrongInputException {
+         if (name != null) {
+             this.name = name;
+         } else {
+             throw new WrongInputException();
+         }
+    }
 
     public String getName() { return name; }
 
