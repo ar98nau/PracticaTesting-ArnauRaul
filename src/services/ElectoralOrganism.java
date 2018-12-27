@@ -1,5 +1,9 @@
 package services;
 
+import data.DigitalSignature;
+import data.Nif;
+import data.Party;
+
 /**
  * External service for signing votes and manage the electoral roll
  */

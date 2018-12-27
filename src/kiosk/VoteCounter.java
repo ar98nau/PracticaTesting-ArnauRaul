@@ -1,79 +1,68 @@
 package kiosk;
 
 import data.Party;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import Exception.WrongInputException
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * A class that represents the result in an election site
  */
 
 public class VoteCounter {
-    Set<Party> validParties;
-    List<Integer> partiesVotes;
-    int nullVotes;
-    int blankVotes;
-    int totalVotes;
+    BigDecimal totalVotes;
+    Map <Party, BigDecimal> votes;
+    Party nullParty;
+    Party blankParty;
 
-    public VoteCounter(Set<Party> validParties) {
-        this.validParties = validParties;
-        nullVotes = 0;
-        blankVotes = 0;
-        totalVotes = 0;
-        for(int i=0; i<validParties.size(); i++){
-            partiesVotes.add(0);
+    public VoteCounter(Set<Party> validParties) throws WrongInputException {
+        votes = new HashMap<>();
+        Iterator iterator = validParties.iterator();
+        while(iterator.hasNext()){
+            votes.put((Party) iterator.next(), BigDecimal.ZERO);
         }
+        nullParty = new Party("Null");
+        blankParty = new Party("Blank");
+        votes.put(nullParty, BigDecimal.ZERO);
+        votes.put(blankParty, BigDecimal.ZERO);
     }
 
     public void countParty(Party party) {
-        int index = getPartyIndex(party);
-        partiesVotes.set(index, partiesVotes.get(index)+1);
+        BigDecimal actual = votes.get(party);
+        votes.put(party, actual.add(BigDecimal.ONE));
     }
 
     public void countNull() {
-        nullVotes+=1;
+        BigDecimal actual = votes.get(nullParty);
+        votes.put(nullParty, actual.add(BigDecimal.ONE));
     }
     public void countBlank() {
-        blankVotes+=1;
+        BigDecimal actual = votes.get(blankParty);
+        votes.put(blankParty, actual.add(BigDecimal.ONE));
     }
     public void scrutinize(Party party) {
-        if(party.getName()=="blank"){
+        if(party.getName()=="Blank"){
             countBlank();
-        }else if(!validParties.contains(party)){
+        }else if(party.getName()=="Null"){
             countNull();
         }else{
             countParty(party);
         }
-        totalVotes+=1;
+        totalVotes = BigDecimal.ONE.add(totalVotes);
     }
 
     public int getVotesFor(Party party) {
-        int index = getPartyIndex(party);
-        return partiesVotes.get(index);
+        return votes.get(party).intValue();
     }
 
     public int getNulls() {
-        return nullVotes;
+        return votes.get(nullParty).intValue(;
     }
     public int getBlanks() {
-        return blankVotes;
+        return votes.get(blankParty).intValue(;
     }
     public int getTotal() {
-        return totalVotes;
+        return totalVotes.intValue();
     }
 
-    private int getPartyIndex(Party party){
-        int contador = 0;
-        Iterator iterador = validParties.iterator();
-        while(iterador.hasNext()){
-            Party actual = (Party) iterador.next();
-            if(actual.equals(party)){
-                return contador;
-            }
-            contador+=1;
-        }
-        return -1;
-    }
 }
