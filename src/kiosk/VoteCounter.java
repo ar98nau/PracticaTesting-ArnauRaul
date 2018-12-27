@@ -1,7 +1,7 @@
 package kiosk;
 
 import data.Party;
-import Exception.WrongInputException
+import Exception.WrongInputException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -56,10 +56,10 @@ public class VoteCounter {
     }
 
     public int getNulls() {
-        return votes.get(nullParty).intValue(;
+        return votes.get(nullParty).intValue();
     }
     public int getBlanks() {
-        return votes.get(blankParty).intValue(;
+        return votes.get(blankParty).intValue();
     }
     public int getTotal() {
         return totalVotes.intValue();
