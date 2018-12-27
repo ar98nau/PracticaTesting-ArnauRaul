@@ -1,4 +1,9 @@
 package kiosk;
+
+import data.Party;
+import services.ElectoralOrganism;
+import services.MailerService;
+
 /**
  * Implements a simplification of Use Case: Emit eVote
  */
