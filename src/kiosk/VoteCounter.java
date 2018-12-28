@@ -10,12 +10,14 @@ import java.util.*;
  */
 
 public class VoteCounter {
-    BigDecimal totalVotes;
-    Map <Party, BigDecimal> votes;
-    Party nullParty;
-    Party blankParty;
+    public BigDecimal totalVotes = BigDecimal.ZERO;
+    private Map <Party, BigDecimal> votes;
+    public Party nullParty;
+    public Party blankParty;
 
     public VoteCounter(Set<Party> validParties) throws WrongInputException {
+        if(validParties==null) throw new WrongInputException();
+
         votes = new HashMap<>();
         Iterator iterator = validParties.iterator();
         while(iterator.hasNext()){
