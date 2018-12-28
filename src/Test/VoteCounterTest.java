@@ -2,7 +2,6 @@ package Test;
 
 import data.Party;
 import kiosk.VoteCounter;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +10,7 @@ import Exception.*;
 import org.junit.jupiter.api.TestInstance;
 
 import auxiliars.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class VoteCounterTest {
