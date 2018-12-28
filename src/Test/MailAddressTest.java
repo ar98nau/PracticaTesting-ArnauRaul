@@ -11,4 +11,5 @@ class MailAddressTest {
     void exceptionTesting() {
         assertThrows(WrongInputException.class, () -> new MailAddress(null));
     }
+
 }
