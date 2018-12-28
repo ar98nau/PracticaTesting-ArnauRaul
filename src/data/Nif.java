@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 final public class Nif {
     private final String nif;
-    public final ArrayList<String> Nifs = new ArrayList<>();
 
     public Nif(String nif) throws WrongInputException {
         if (nif == null) throw new WrongInputException();
