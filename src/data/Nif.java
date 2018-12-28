@@ -15,7 +15,6 @@ final public class Nif {
         if (nif == null) throw new WrongInputException();
         if (checkNif(nif)){
             this.nif = nif;
-            Nifs.add(nif);
         } else {
             throw new WrongInputException();
         }
