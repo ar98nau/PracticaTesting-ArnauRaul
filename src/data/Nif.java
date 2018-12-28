@@ -1,25 +1,33 @@
 package data;
 import Exception.WrongInputException;
 
+import java.util.ArrayList;
+
+
 /**
  * The NIF of a person that participates in an election.
  */
 
 final public class Nif {
     private final String nif;
+    public final ArrayList<String> Nifs = new ArrayList<>();
 
     public Nif(String nif) throws WrongInputException {
         if (nif == null) throw new WrongInputException();
         if (checkNif(nif)){
             this.nif = nif;
+            Nifs.add(nif);
         } else {
             throw new WrongInputException();
         }
+
     }
 
     public String getNif() { return nif; }
 
     private boolean checkNif (String nif) {
+        /*suposem com a correcte un NIF del format de 8 digits seguits d'una lletra.
+        Per exemple: 123456789A */
         if (nif.length() != 9) return false;
         String numbers = this.nif.substring(0, 7);
         String letter = this.nif.substring(8, 8);
