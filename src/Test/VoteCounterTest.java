@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 import auxiliars.*;
 import java.util.Iterator;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
 class VoteCounterTest {
     private VoteCounter counter;
     private dataSet<Party> parties;

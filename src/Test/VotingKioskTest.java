@@ -2,11 +2,12 @@ package Test;
 
 import Exception.*;
 import auxiliars.dataSet;
+import data.DigitalSignature;
 import data.Nif;
 import data.Party;
 import kiosk.VoteCounter;
 import kiosk.VotingKiosk;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ElectoralOrganism;
 import services.ElectoralOrganismImpl;
@@ -41,7 +42,7 @@ class VotingKioskTest {
     private Nif nif6;
     private Nif nif7;
 
-    @BeforeAll
+    @BeforeEach
     void init(){
         {
             try {
@@ -133,7 +134,8 @@ class VotingKioskTest {
     }
 
     @Test
-    void sendeReceiptTest() {
+    void sendeReceiptTest() throws WrongInputException {
+
     }
 
     private class TestVoteCounter extends VoteCounter {
@@ -149,6 +151,17 @@ class VotingKioskTest {
 
         public boolean wasScrutinized() {
             return scrutinized;
+        }
+    }
+
+    private class TestOrganismeElectoral extends ElectoralOrganismImpl{
+
+        public TestOrganismeElectoral(VoteCounter inputCounter, ArrayList<Nif> nifs) throws WrongInputException {
+            super(inputCounter, nifs);
+        }
+
+        public DigitalSignature askForDigitalSignature(Party party) throws WrongInputException {
+            return new DigitalSignature("signatura digital");
         }
     }
 }

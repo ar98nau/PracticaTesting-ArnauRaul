@@ -27,8 +27,8 @@ final public class Nif {
         /*suposem com a correcte un NIF del format de 8 digits seguits d'una lletra.
         Per exemple: 123456789A */
         if (nif.length() != 9) return false;
-        String numbers = this.nif.substring(0, 7);
-        String letter = this.nif.substring(8, 8);
+        String numbers = nif.substring(0, 8);
+        String letter = nif.substring(8, 9);
         if (!isNum(numbers)) return false;
         if (!isAlpha(letter)) return false;
         return  true;
