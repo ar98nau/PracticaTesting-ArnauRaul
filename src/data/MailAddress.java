@@ -1,6 +1,5 @@
 package data;
 import Exception.WrongInputException;
-import services.MailerService;
 
 
 /**

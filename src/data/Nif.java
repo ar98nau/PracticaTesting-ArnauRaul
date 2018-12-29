@@ -1,8 +1,6 @@
 package data;
 import Exception.WrongInputException;
 
-import java.util.ArrayList;
-
 
 /**
  * The NIF of a person that participates in an election.

@@ -1,16 +1,15 @@
 package Test;
 
+import Exception.WrongInputException;
+import auxiliars.dataSet;
 import data.Party;
 import kiosk.VoteCounter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import Exception.*;
-import org.junit.jupiter.api.TestInstance;
-
-import auxiliars.*;
 import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class VoteCounterTest {

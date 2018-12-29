@@ -1,6 +1,5 @@
 package services;
 
-import auxiliars.dataSet;
 import data.DigitalSignature;
 import data.Nif;
 import data.Party;

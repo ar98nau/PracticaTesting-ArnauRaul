@@ -1,6 +1,6 @@
 package Test;
 
-import Exception.*;
+import Exception.WrongInputException;
 import auxiliars.dataSet;
 import data.DigitalSignature;
 import data.MailAddress;
