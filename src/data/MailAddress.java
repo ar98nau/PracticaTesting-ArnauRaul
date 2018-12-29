@@ -4,7 +4,7 @@ import services.MailerService;
 
 
 /**
- * The Mail of a person that participates in an election.
+ * The MailerServiceImpl of a person that participates in an election.
  */
 
 final public class MailAddress {
@@ -33,7 +33,7 @@ final public class MailAddress {
 
     @Override
     public String toString() {
-        return "Mail{" + "mail='" + mail + '\'' + '}';
+        return "MailerServiceImpl{" + "mail='" + mail + '\'' + '}';
     }
 
 }

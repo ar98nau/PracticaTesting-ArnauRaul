@@ -2,7 +2,7 @@ package data;
 import Exception.WrongInputException;
 
 /**
- * The Digital Signature of a person that participates in an election.
+ * The Digital Signature which the electoral organism provides.
  */
 
 final public class DigitalSignature {

@@ -3,6 +3,7 @@ package kiosk;
 
 import data.*;
 import services.ElectoralOrganism;
+import services.ElectoralOrganismImpl;
 import services.MailerService;
 import Exception.WrongInputException;
 import java.util.Set;
@@ -12,22 +13,19 @@ import java.util.Set;
  */
 
 public class VotingKiosk {
-    ElectoralOrganism organisme;
-    MailerService mail;
-    VoteCounter counter;
+    private ElectoralOrganismImpl organisme;
+    private MailerService mail;
 
-    public VotingKiosk(Set<Party> validParties) throws WrongInputException {
-        counter = new VoteCounter(validParties);
+    public VotingKiosk(){
     }
 
-    public void setElectoralOrganism(ElectoralOrganism eO) { organisme = eO; }
+    public void setElectoralOrganism(ElectoralOrganism eO) { organisme = (ElectoralOrganismImpl) eO; }
     public void setMailerService(MailerService mService){ mail = mService; }
 
     public void vote(Party party) {
-        counter.scrutinize(party);
+        organisme.counter.scrutinize(party);
     }
 
     public void sendeReceipt(MailAddress address) {
-
     }
 }

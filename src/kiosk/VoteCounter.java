@@ -11,7 +11,7 @@ import java.util.*;
 
 public class VoteCounter {
     public BigDecimal totalVotes = BigDecimal.ZERO;
-    private Map <Party, BigDecimal> votes;
+    private HashMap <Party, BigDecimal> votes;
     public Party nullParty;
     public Party blankParty;
 
