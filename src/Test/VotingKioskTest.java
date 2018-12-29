@@ -4,6 +4,7 @@ import Exception.*;
 import auxiliars.dataSet;
 import data.Nif;
 import data.Party;
+import kiosk.VoteCounter;
 import kiosk.VotingKiosk;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ import services.MailerService;
 import services.MailerServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-import static com.sun.tools.doclint.Entity.cup;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VotingKioskTest {
@@ -78,6 +79,12 @@ class VotingKioskTest {
         parties.add(vox);
         parties.add(pdms);
         parties.add(psc);
+        VoteCounter counter = null;
+        try {
+            counter = new VoteCounter(parties);
+        } catch (WrongInputException e) {
+            e.printStackTrace();
+        }
 
         nifs = new ArrayList<Nif>();
         nifs.add(nif1);
@@ -90,7 +97,7 @@ class VotingKioskTest {
 
         terminal = new VotingKiosk();
         try {
-            OrganismeElectoral = new ElectoralOrganismImpl(parties, nifs);
+            OrganismeElectoral = new ElectoralOrganismImpl(counter, nifs);
         } catch (WrongInputException e) {
             e.printStackTrace();
         }
@@ -99,17 +106,49 @@ class VotingKioskTest {
 
     @Test
     void setElectoralOrganismTest() {
+        terminal.setElectoralOrganism(OrganismeElectoral);
+        assertEquals(OrganismeElectoral, terminal.getOrganisme());
     }
 
     @Test
     void setMailerServiceTest() {
+        terminal.setMailerService(ServeiMail);
+        assertEquals(ServeiMail, terminal.getCorreu());
     }
 
     @Test
     void voteTest() {
+        TestVoteCounter counterTest = null;
+        ElectoralOrganism organismTest = null;
+        try {
+            counterTest = new TestVoteCounter(parties);
+            organismTest = new ElectoralOrganismImpl(counterTest, nifs);
+        } catch (WrongInputException e) {
+            e.printStackTrace();
+        }
+        terminal.setElectoralOrganism(organismTest);
+        terminal.vote(cup);
+        assertTrue(counterTest.wasScrutinized());
+
     }
 
     @Test
     void sendeReceiptTest() {
+    }
+
+    private class TestVoteCounter extends VoteCounter {
+        private boolean scrutinized = false;
+
+        public TestVoteCounter(Set<Party> validParties) throws WrongInputException {
+            super(validParties);
+        }
+
+        public void scrutinize(Party party) {
+            scrutinized = true;
+        }
+
+        public boolean wasScrutinized() {
+            return scrutinized;
+        }
     }
 }

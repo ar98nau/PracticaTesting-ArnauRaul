@@ -2,7 +2,6 @@ package services;
 
 import data.DigitalSignature;
 import data.MailAddress;
-import Exception.WrongInputException;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;

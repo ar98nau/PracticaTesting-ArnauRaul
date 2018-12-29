@@ -33,4 +33,16 @@ public class VotingKiosk {
         DigitalSignature signatura = organisme.askForDigitalSignature(actualVote);
         correu.send(address, signatura);
     }
+
+    public ElectoralOrganismImpl getOrganisme() {
+        return organisme;
+    }
+
+    public MailerServiceImpl getCorreu() {
+        return correu;
+    }
+
+    public Party getActualVote() {
+        return actualVote;
+    }
 }
