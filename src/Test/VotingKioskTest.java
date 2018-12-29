@@ -3,6 +3,7 @@ package Test;
 import Exception.*;
 import auxiliars.dataSet;
 import data.DigitalSignature;
+import data.MailAddress;
 import data.Nif;
 import data.Party;
 import kiosk.VoteCounter;
@@ -25,6 +26,7 @@ class VotingKioskTest {
     private MailerService ServeiMail;
     private dataSet<Party> parties;
     private ArrayList<Nif> nifs;
+    VoteCounter counter;
 
     private Party pp;
     private Party cs;
@@ -80,7 +82,6 @@ class VotingKioskTest {
         parties.add(vox);
         parties.add(pdms);
         parties.add(psc);
-        VoteCounter counter = null;
         try {
             counter = new VoteCounter(parties);
         } catch (WrongInputException e) {
@@ -135,8 +136,18 @@ class VotingKioskTest {
 
     @Test
     void sendeReceiptTest() throws WrongInputException {
-
+        TestElectoralOrganismImpl organismTest = new TestElectoralOrganismImpl(counter, nifs);
+        TestMailerServiceImpl mailerTest = new TestMailerServiceImpl();
+        terminal.setElectoralOrganism(organismTest);
+        terminal.setMailerService(mailerTest);
+        terminal.sendeReceipt(new MailAddress("test@gmail.com"));
+        assertTrue(mailerTest.wasSent());
+        assertEquals(mailerTest.recievedSign, "1234567");
     }
+
+
+
+
 
     private class TestVoteCounter extends VoteCounter {
         private boolean scrutinized = false;
@@ -154,14 +165,32 @@ class VotingKioskTest {
         }
     }
 
-    private class TestOrganismeElectoral extends ElectoralOrganismImpl{
+    private class TestElectoralOrganismImpl extends ElectoralOrganismImpl{
 
-        public TestOrganismeElectoral(VoteCounter inputCounter, ArrayList<Nif> nifs) throws WrongInputException {
+        public TestElectoralOrganismImpl(VoteCounter inputCounter, ArrayList<Nif> nifs) throws WrongInputException {
             super(inputCounter, nifs);
         }
 
         public DigitalSignature askForDigitalSignature(Party party) throws WrongInputException {
-            return new DigitalSignature("signatura digital");
+            return new DigitalSignature("1234567");
+        }
+    }
+
+    private class TestMailerServiceImpl extends MailerServiceImpl{
+        boolean sent = false;
+        DigitalSignature recievedSign;
+
+        public void send(MailAddress address, DigitalSignature signature) {
+            sent = true;
+            recievedSign = signature;
+        }
+
+        public boolean wasSent() {
+            return sent;
+        }
+
+        public DigitalSignature recievedSign() {
+            return recievedSign;
         }
     }
 }
