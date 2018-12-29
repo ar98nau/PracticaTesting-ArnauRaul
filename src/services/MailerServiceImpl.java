@@ -11,7 +11,7 @@ public class MailerServiceImpl implements MailerService {
     Properties properties;
     MimeMessage message;
 
-    public MailerServiceImpl() throws WrongInputException {
+    public MailerServiceImpl() {
         properties = System.getProperties();
         // Setup mail server
         properties.setProperty("mail.smtp.host", "localhost");
