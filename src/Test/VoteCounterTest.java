@@ -68,16 +68,16 @@ class VoteCounterTest {
 
     @Test
     void countNullTest() {
-        assertEquals(0, counter.getVotesFor(counter.nullParty));
-        counter.scrutinize(counter.nullParty);
-        assertEquals(1, counter.getVotesFor(counter.nullParty));
+        assertEquals(0, counter.getVotesFor(counter.getNullParty()));
+        counter.scrutinize(counter.getNullParty());
+        assertEquals(1, counter.getVotesFor(counter.getNullParty()));
     }
 
     @Test
     void countBlankTest() {
-        assertEquals(0, counter.getVotesFor(counter.blankParty));
-        counter.scrutinize(counter.blankParty);
-        assertEquals(1, counter.getVotesFor(counter.blankParty));
+        assertEquals(0, counter.getVotesFor(counter.getBlankParty()));
+        counter.scrutinize(counter.getBlankParty());
+        assertEquals(1, counter.getVotesFor(counter.getBlankParty()));
     }
 
     @Test
@@ -88,10 +88,10 @@ class VoteCounterTest {
         counter.scrutinize(cup);
         assertEquals(2, counter.getVotesFor(cup));
 
-        counter.scrutinize(counter.nullParty);
+        counter.scrutinize(counter.getNullParty());
         assertEquals(1, counter.getNulls());
 
-        counter.scrutinize(counter.blankParty);
+        counter.scrutinize(counter.getBlankParty());
         assertEquals(1, counter.getNulls());
     }
 

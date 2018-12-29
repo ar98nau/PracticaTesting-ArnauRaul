@@ -10,10 +10,10 @@ import java.util.*;
  */
 
 public class VoteCounter {
-    public BigDecimal totalVotes = BigDecimal.ZERO;
+    private BigDecimal totalVotes = BigDecimal.ZERO;
     private HashMap <Party, BigDecimal> votes;
-    public Party nullParty;
-    public Party blankParty;
+    private Party nullParty;
+    private Party blankParty;
 
     public VoteCounter(Set<Party> validParties) throws WrongInputException {
         if(validParties==null) throw new WrongInputException();
@@ -68,4 +68,15 @@ public class VoteCounter {
         return totalVotes.intValue();
     }
 
+    public BigDecimal getTotalVotes() {
+        return totalVotes;
+    }
+
+    public Party getNullParty() {
+        return nullParty;
+    }
+
+    public Party getBlankParty() {
+        return blankParty;
+    }
 }
