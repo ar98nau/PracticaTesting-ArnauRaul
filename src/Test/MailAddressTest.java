@@ -5,7 +5,7 @@ import Exception.WrongInputException;
 import data.MailAddress;
 import org.junit.jupiter.api.Test;
 
-class MailerServiceImplAddressTest {
+class MailAddressTest {
 
     @Test
     void exceptionTesting() {
