@@ -15,18 +15,12 @@ public class ElectoralOrganismImpl implements ElectoralOrganism {
     HashMap<Nif, Boolean> cens;  // suposarem que true significa que pot votar i false que no pot votar
     public VoteCounter counter;
 
-    public ElectoralOrganismImpl (dataSet<Party> parties) throws WrongInputException {
+    public ElectoralOrganismImpl (dataSet<Party> parties, ArrayList<Nif> nifs) throws WrongInputException {
+        if (parties == null || nifs == null) throw new WrongInputException();
+
         cens = new HashMap<Nif, Boolean>();
         counter = new VoteCounter(parties);
-    }
-
-    public ElectoralOrganismImpl(ArrayList<Nif> nifs){
         for(Nif nif : nifs){
-            cens.put(nif, true);
-        }
-    }
-    public void addNif(Nif nif){
-        if(!cens.containsKey(nif)){
             cens.put(nif, true);
         }
     }
