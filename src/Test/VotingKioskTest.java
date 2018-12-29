@@ -142,11 +142,8 @@ class VotingKioskTest {
         terminal.setMailerService(mailerTest);
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
         assertTrue(mailerTest.wasSent());
-        assertEquals(mailerTest.recievedSign, "1234567");
+        assertEquals(mailerTest.recievedSign, new DigitalSignature("1234567"));
     }
-
-
-
 
 
     private class TestVoteCounter extends VoteCounter {
