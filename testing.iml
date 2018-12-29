@@ -43,6 +43,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mail" level="project" />
+    <orderEntry type="library" name="mail" level="application" />
   </component>
 </module>
