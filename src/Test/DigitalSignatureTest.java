@@ -1,4 +1,5 @@
 package Test;
+
 import Exception.WrongInputException;
 import data.DigitalSignature;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,5 @@
 package Test;
+
 import Exception.WrongInputException;
 import data.Party;
 import org.junit.jupiter.api.Test;
