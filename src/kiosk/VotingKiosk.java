@@ -30,8 +30,8 @@ public class VotingKiosk {
     }
 
     public void sendeReceipt(MailAddress address) throws WrongInputException {
-        DigitalSignature signatura = organisme.askForDigitalSignature(actualVote);
-        correu.send(address, signatura);
+        DigitalSignature signature = organisme.askForDigitalSignature(actualVote);
+        correu.send(address, signature);
     }
 
     public ElectoralOrganismImpl getOrganisme() {

@@ -26,9 +26,7 @@ public class ElectoralOrganismImpl implements ElectoralOrganism {
 
     @Override
     public boolean canVote(Nif nif) {
-        if(cens.get(nif) == true){
-            return true;
-        }
+        if (cens.containsKey(nif) && cens.get(nif) == true) return true;
         return false;
     }
 
