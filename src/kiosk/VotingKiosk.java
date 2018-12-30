@@ -13,33 +13,33 @@ import Exception.WrongInputException;
  */
 
 public class VotingKiosk {
-    private ElectoralOrganismImpl organisme;
-    private MailerServiceImpl correu;
+    private ElectoralOrganismImpl organism;
+    private MailerServiceImpl mail;
     private Party actualVote;
 
 
     public VotingKiosk(){
     }
 
-    public void setElectoralOrganism(ElectoralOrganism eO) { organisme = (ElectoralOrganismImpl) eO; }
-    public void setMailerService(MailerService mService){ correu = (MailerServiceImpl) mService; }
+    public void setElectoralOrganism(ElectoralOrganism eO) { organism = (ElectoralOrganismImpl) eO; }
+    public void setMailerService(MailerService mService){ mail = (MailerServiceImpl) mService; }
 
     public void vote(Party party) {
-        organisme.counter.scrutinize(party);
+        organism.counter.scrutinize(party);
         actualVote = party;
     }
 
     public void sendeReceipt(MailAddress address) throws WrongInputException {
-        DigitalSignature signature = organisme.askForDigitalSignature(actualVote);
-        correu.send(address, signature);
+        DigitalSignature signature = organism.askForDigitalSignature(actualVote);
+        mail.send(address, signature);
     }
 
-    public ElectoralOrganismImpl getOrganisme() {
-        return organisme;
+    public ElectoralOrganismImpl getOrganism() {
+        return organism;
     }
 
-    public MailerServiceImpl getCorreu() {
-        return correu;
+    public MailerServiceImpl getMail() {
+        return mail;
     }
 
     public Party getActualVote() {

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ElectoralOrganismTest {
     private VotingKiosk terminal;
     private ElectoralOrganism OrganismeElectoral;
-    private MailerService ServeiMail;
+    private MailerService mailService;
     private dataSet<Party> parties;
     private ArrayList<Nif> nifs;
     VoteCounter counter;

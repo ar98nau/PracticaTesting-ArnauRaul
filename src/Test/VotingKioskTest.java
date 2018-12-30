@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VotingKioskTest {
     private VotingKiosk terminal;
-    private ElectoralOrganism OrganismeElectoral;
-    private MailerService ServeiMail;
+    private ElectoralOrganism organism;
+    private MailerService mailService;
     private dataSet<Party> parties;
     private ArrayList<Nif> nifs;
     VoteCounter counter;
@@ -99,23 +99,23 @@ class VotingKioskTest {
 
         terminal = new VotingKiosk();
         try {
-            OrganismeElectoral = new ElectoralOrganismImpl(counter, nifs);
+            organism = new ElectoralOrganismImpl(counter, nifs);
         } catch (WrongInputException e) {
             e.printStackTrace();
         }
-        ServeiMail = new MailerServiceImpl();
+        mailService = new MailerServiceImpl();
     }
 
     @Test
     void setElectoralOrganismTest() {
-        terminal.setElectoralOrganism(OrganismeElectoral);
-        assertEquals(OrganismeElectoral, terminal.getOrganisme());
+        terminal.setElectoralOrganism(organism);
+        assertEquals(organism, terminal.getOrganism());
     }
 
     @Test
     void setMailerServiceTest() {
-        terminal.setMailerService(ServeiMail);
-        assertEquals(ServeiMail, terminal.getCorreu());
+        terminal.setMailerService(mailService);
+        assertEquals(mailService, terminal.getMail());
     }
 
     @Test
