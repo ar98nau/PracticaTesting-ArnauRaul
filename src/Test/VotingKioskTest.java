@@ -142,7 +142,7 @@ class VotingKioskTest {
         terminal.setMailerService(mailerTest);
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
         assertTrue(mailerTest.wasSent());
-        assertEquals(mailerTest.recievedSign, new DigitalSignature("1234567"));
+        assertEquals(mailerTest.recievedSign(), new DigitalSignature("1234567"));
     }
 
 
@@ -175,14 +175,14 @@ class VotingKioskTest {
 
     private class TestMailerServiceImpl extends MailerServiceImpl{
         boolean sent = false;
-        DigitalSignature recievedSign;
+        private DigitalSignature recievedSign;
 
         public void send(MailAddress address, DigitalSignature signature) {
             sent = true;
             recievedSign = signature;
         }
 
-        public boolean wasSent() {
+        private boolean wasSent() {
             return sent;
         }
 
