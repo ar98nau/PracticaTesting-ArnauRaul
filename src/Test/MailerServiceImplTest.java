@@ -34,7 +34,7 @@ class MailerServiceImplTest {
         }catch(Exception ex) {
             throwed = true;
         }
-        assertEquals(throwed, false);
+        assertFalse(throwed);
     }
 
     }
