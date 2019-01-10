@@ -5,7 +5,7 @@ import Exception.WrongInputException;
 import data.Nif;
 import org.junit.jupiter.api.Test;
 
-class NifTest {
+public class NifTest {
 
     @Test
     void exceptionTesting() {

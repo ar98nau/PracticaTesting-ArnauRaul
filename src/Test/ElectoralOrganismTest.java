@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ElectoralOrganismTest {
+public class ElectoralOrganismTest {
     private VotingKiosk terminal;
     private ElectoralOrganism OrganismeElectoral;
     private MailerService mailService;

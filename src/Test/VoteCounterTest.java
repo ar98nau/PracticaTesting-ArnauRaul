@@ -12,7 +12,7 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class VoteCounterTest {
+public class VoteCounterTest {
     private VoteCounter counter;
     private dataSet<Party> parties;
 

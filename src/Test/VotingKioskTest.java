@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VotingKioskTest {
+public class VotingKioskTest {
     private VotingKiosk terminal;
     private ElectoralOrganism organism;
     private MailerService mailService;

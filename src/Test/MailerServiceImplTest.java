@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MailerServiceImplTest {
+public class MailerServiceImplTest {
     private MailerService mail;
     private DigitalSignature signature;
     private MailAddress address;
