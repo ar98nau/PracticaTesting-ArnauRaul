@@ -48,11 +48,10 @@ class BiometricProcessorTest {
         bProc.setbSoftware(bSw);
         bProc.setbReader(bRd);
         bProc.setbScanner(bScn);
-        boolean b = bProc.automaticVerification();
+        assertTrue(bProc.automaticVerification());
         assertTrue(((BiometricReaderTest)bRd).isReadPassport());
         assertTrue(((BiometricScannerTest)bScn).isFaceScanned());
         assertTrue(((BiometricScannerTest)bScn).isFingerScanned());
-
     }
 
     private class BiometricReaderTest implements BiometricReader {

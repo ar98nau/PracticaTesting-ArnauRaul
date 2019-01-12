@@ -36,9 +36,12 @@ public class BiometricProcessor {
         return bScanner;
     }
 
-    public BiometricSoftware getbSofware() { return bSoftware; }
+    public BiometricSoftware getbSofware() {
+        return bSoftware;
+    }
 
     public boolean automaticVerification() throws BiometricVerificationFailedException {
+        bData = new BiometricData();
         bDataPassport = bReader.readBiometricData();
         bData.setFaceKey(bScanner.scanFace());
         bData.setFingerprintKey(bScanner.scanFingerprint());
