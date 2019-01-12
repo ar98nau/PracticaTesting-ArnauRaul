@@ -3,10 +3,6 @@ package services;
 import data.DigitalSignature;
 import data.MailAddress;
 
-import javax.mail.*;
-import javax.mail.internet.*;
-import java.util.Properties;
-
 public class MailerServiceImpl implements MailerService {
 
     public MailerServiceImpl() {

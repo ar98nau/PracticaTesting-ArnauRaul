@@ -94,7 +94,7 @@ public class ElectoralOrganismTest {
         nifs.add(nif7);
 
         try {
-            OrganismeElectoral = new ElectoralOrganismImpl(counter, nifs);
+            OrganismeElectoral = new ElectoralOrganismImpl(nifs);
         } catch (WrongInputException e) {
             e.printStackTrace();
         }
@@ -102,9 +102,7 @@ public class ElectoralOrganismTest {
 
     @Test
     void exceptionTesting() {
-        assertThrows(WrongInputException.class, () -> new ElectoralOrganismImpl(null, nifs));
-        assertThrows(WrongInputException.class, () -> new ElectoralOrganismImpl(counter, null));
-        assertThrows(WrongInputException.class, () -> new ElectoralOrganismImpl(null, null));
+        assertThrows(WrongInputException.class, () -> new ElectoralOrganismImpl(null));
     }
 
     @Test

@@ -1,32 +1,34 @@
 package kiosk;
 
 
-import data.*;
-import services.ElectoralOrganism;
-import services.ElectoralOrganismImpl;
-import services.MailerService;
-import services.MailerServiceImpl;
 import Exception.WrongInputException;
+import data.DigitalSignature;
+import data.MailAddress;
+import data.Party;
+import services.ElectoralOrganism;
+import services.MailerService;
 
 /**
  * Implements a simplification of Use Case: Emit eVote
  */
 
 public class VotingKiosk {
-    private ElectoralOrganismImpl organism;
-    private MailerServiceImpl mail;
+    private ElectoralOrganism organism;
+    private MailerService mail;
     private Party actualVote;
+    private VoteCounter counter;
 
 
-    public VotingKiosk(){
+    public VotingKiosk() {
 
     }
 
-    public void setElectoralOrganism(ElectoralOrganism eO) { organism = (ElectoralOrganismImpl) eO; }
-    public void setMailerService(MailerService mService){ mail = (MailerServiceImpl) mService; }
+    public void setElectoralOrganism(ElectoralOrganism eO) { organism = eO; }
+    public void setMailerService(MailerService mService){ mail = mService; }
+    public void setVoteCounter(VoteCounter vCounter){ counter = vCounter; }
 
     public void vote(Party party) {
-        organism.counter.scrutinize(party);
+        counter.scrutinize(party);
         actualVote = party;
     }
 
@@ -35,15 +37,19 @@ public class VotingKiosk {
         mail.send(address, signature);
     }
 
-    public ElectoralOrganismImpl getOrganism() {
+    public ElectoralOrganism getOrganism() {
         return organism;
     }
 
-    public MailerServiceImpl getMail() {
+    public MailerService getMail() {
         return mail;
     }
 
-    public Party getActualVote() {
-        return actualVote;
+    public VoteCounter getCounter() {
+        return counter;
     }
+//
+//    public Party getActualVote() {
+//        return actualVote;
+//    }
 }

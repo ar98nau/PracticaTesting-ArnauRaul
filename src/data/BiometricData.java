@@ -3,8 +3,6 @@ import services.BiometricReader;
 import services.BiometricScanner;
 import services.BiometricSoftware;
 
-import java.util.Random;
-
 public class BiometricData implements BiometricReader, BiometricScanner, BiometricSoftware {
 
     int faceKey;
@@ -18,7 +16,7 @@ public class BiometricData implements BiometricReader, BiometricScanner, Biometr
 
     @Override
     public BiometricData readBiometricData() {
-
+        return null;
     }
 
     @Override

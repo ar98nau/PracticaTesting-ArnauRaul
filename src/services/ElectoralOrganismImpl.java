@@ -1,10 +1,9 @@
 package services;
 
+import Exception.WrongInputException;
 import data.DigitalSignature;
 import data.Nif;
 import data.Party;
-import Exception.WrongInputException;
-import kiosk.VoteCounter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,12 +11,11 @@ import java.util.HashMap;
 
 public class ElectoralOrganismImpl implements ElectoralOrganism {
     HashMap<Nif, Boolean> cens;  // suposarem que true significa que pot votar i false que no pot votar
-    public VoteCounter counter;
 
-    public ElectoralOrganismImpl ( ArrayList<Nif> nifs) throws WrongInputException {
+    public ElectoralOrganismImpl (ArrayList<Nif> nifs) throws WrongInputException {
         if (nifs == null) throw new WrongInputException();
 
-        cens = new HashMap<Nif, Boolean>();
+        cens = new HashMap<>();
         for(Nif nif : nifs){
             cens.put(nif, true);
         }
