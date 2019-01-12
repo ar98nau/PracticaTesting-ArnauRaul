@@ -16,8 +16,8 @@ import services.MailerService;
 import java.util.ArrayList;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VotingKioskTest {
     private VotingKiosk terminal;
@@ -133,6 +133,7 @@ public class VotingKioskTest {
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
         assertTrue(((TestMailerService) mailService).wasSent());
         assertEquals(((TestMailerService) mailService).recievedSign().toString(), new DigitalSignature("1234567").toString());
+
     }
 
 

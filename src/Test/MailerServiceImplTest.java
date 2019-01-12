@@ -1,14 +1,14 @@
 package Test;
+
 import Exception.WrongInputException;
 import data.DigitalSignature;
 import data.MailAddress;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.MailerService;
 import services.MailerServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class MailerServiceImplTest {
     private MailerService mail;
