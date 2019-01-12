@@ -1,11 +1,14 @@
 package Test;
 
+import Exception.BiometricVerificationFailedException;
+import Exception.VotingRightsFailedException;
 import Exception.WrongInputException;
 import auxiliars.dataSet;
 import data.DigitalSignature;
 import data.MailAddress;
 import data.Nif;
 import data.Party;
+import kiosk.BiometricProcessor;
 import kiosk.VoteCounter;
 import kiosk.VotingKiosk;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,91 +16,31 @@ import org.junit.jupiter.api.Test;
 import services.ElectoralOrganism;
 import services.MailerService;
 
-import java.util.ArrayList;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VotingKioskTest {
     private VotingKiosk terminal;
     private ElectoralOrganism organism;
     private MailerService mailService;
     private VoteCounter counter;
-    private ArrayList<Nif> nifs;
-
-    private Nif nif1;
-    private Nif nif2;
-    private Nif nif3;
-    private Nif nif4;
-    private Nif nif5;
-    private Nif nif6;
-    private Nif nif7;
-
-    private Party pp = null;
-    private Party cs = null;
-    private Party erc = null;
-    private Party cup = null;
-    private Party vox = null;
-    private Party pdms = null;
-    private Party psc = null;
+    private BiometricProcessor bioProc;
 
     @BeforeEach
     void init(){
-        try {
-            pp = new Party("PP");
-            cs = new Party("CS");
-            erc = new Party("ERC");
-            cup = new Party("CUP");
-            vox = new Party("VOX");
-            pdms = new Party("PODEMOS");
-            psc = new Party("PSC");
-        } catch (WrongInputException e) {
-            e.printStackTrace();
-        }
-
         dataSet<Party> parties = new dataSet<>();
-        parties.add(pp);
-        parties.add(cs);
-        parties.add(erc);
-        parties.add(cup);
-        parties.add(vox);
-        parties.add(pdms);
-        parties.add(psc);
-
         try {
             counter = new TestVoteCounter(parties);
         } catch (WrongInputException e) {
             e.printStackTrace();
         }
 
-        {
-            try {
-                nif1 = new Nif("12345678M");
-                nif2 = new Nif("00000123A");
-                nif3 = new Nif("12986452E");
-                nif4 = new Nif("19273657H");
-                nif5 = new Nif("18294756G");
-                nif6 = new Nif("18293745Q");
-                nif7 = new Nif("84776231Z");
-            } catch (WrongInputException e) {
-                e.printStackTrace();
-            }
-        }
-
-        nifs = new ArrayList<Nif>();
-        nifs.add(nif1);
-        nifs.add(nif2);
-        nifs.add(nif3);
-        nifs.add(nif4);
-        nifs.add(nif5);
-        nifs.add(nif6);
-        nifs.add(nif7);
-
         terminal = new VotingKiosk();
 
         organism = new TestElectoralOrganism();
         mailService = new TestMailerService();
+        bioProc = new BiometricProcessorTest();
     }
 
     @Test
@@ -119,11 +62,32 @@ public class VotingKioskTest {
     }
 
     @Test
-    void voteTest() {
-        terminal.setElectoralOrganism(organism);
+    void voteTest() throws WrongInputException {
         terminal.setVoteCounter(counter);
-        terminal.vote(cup);
+        terminal.vote(new Party("cup"));
         assertTrue(((TestVoteCounter)counter).wasScrutinized());
+    }
+
+    @Test
+    void startNewValidVotingProcessTest() throws WrongInputException, BiometricVerificationFailedException, VotingRightsFailedException {
+        terminal.setVoteCounter(counter);
+        terminal.setElectoralOrganism(organism);
+        terminal.setMailerService(mailService);
+        terminal.setBiometricProcessor(bioProc);
+
+        terminal.startNewVotingProcess();
+        assertTrue(((TestElectoralOrganism)organism).isDisabled());
+    }
+
+    @Test
+    void startNewNoValidVotingProcessTest() {
+        ElectoralOrganism NoNifOrganism = new NoNifElectoralOrganismTest();
+        terminal.setVoteCounter(counter);
+        terminal.setElectoralOrganism(NoNifOrganism);
+        terminal.setMailerService(mailService);
+        terminal.setBiometricProcessor(bioProc);
+
+        assertThrows(VotingRightsFailedException.class, () -> terminal.startNewVotingProcess());
     }
 
     @Test
@@ -133,8 +97,8 @@ public class VotingKioskTest {
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
         assertTrue(((TestMailerService) mailService).wasSent());
         assertEquals(((TestMailerService) mailService).recievedSign().toString(), new DigitalSignature("1234567").toString());
-
     }
+
 
 
     private class TestVoteCounter extends VoteCounter {
@@ -155,22 +119,38 @@ public class VotingKioskTest {
     }
 
     private class TestElectoralOrganism implements ElectoralOrganism{
+        private boolean disabled = false;
 
         public TestElectoralOrganism() {
         }
 
         @Override
         public boolean canVote(Nif nif) {
-            return false;
+            return true;
         }
 
         @Override
         public void disableVoter(Nif nif) {
-
+            disabled = true;
         }
 
         public DigitalSignature askForDigitalSignature(Party party) throws WrongInputException {
             return new DigitalSignature("1234567");
+        }
+
+        public boolean isDisabled() {
+            return disabled;
+        }
+    }
+
+    private class NoNifElectoralOrganismTest extends TestElectoralOrganism {
+
+        public NoNifElectoralOrganismTest() {
+        }
+
+        @Override
+        public boolean canVote(Nif nif) {
+            return false;
         }
     }
 
@@ -193,6 +173,13 @@ public class VotingKioskTest {
 
         public DigitalSignature recievedSign() {
             return recievedSign;
+        }
+    }
+
+    private class BiometricProcessorTest extends BiometricProcessor{
+        @Override
+        public boolean automaticVerification() {
+            return true;
         }
     }
 }

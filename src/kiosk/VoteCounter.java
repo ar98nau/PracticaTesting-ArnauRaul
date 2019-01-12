@@ -46,13 +46,15 @@ public class VoteCounter {
         votes.put(blankParty, actual.add(BigDecimal.ONE));
     }
 
-    public void scrutinize(Party party) {
+    public void scrutinize(Party party) throws WrongInputException {
         if(party.getName()=="Blank"){
             countBlank();
         }else if(party.getName()=="Null"){
             countNull();
-        }else{
+        }else if (votes.containsKey(party)){
             countParty(party);
+        }else{
+            throw new WrongInputException();
         }
         totalVotes = BigDecimal.ONE.add(totalVotes);
     }
@@ -63,16 +65,6 @@ public class VoteCounter {
 
     public int getNulls() {
         return votes.get(nullParty).intValue();
-    }
-    public int getBlanks() {
-        return votes.get(blankParty).intValue();
-    }
-    public int getTotal() {
-        return totalVotes.intValue();
-    }
-
-    public BigDecimal getTotalVotes() {
-        return totalVotes;
     }
 
     public Party getNullParty() {

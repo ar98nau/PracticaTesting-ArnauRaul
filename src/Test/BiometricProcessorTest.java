@@ -54,6 +54,9 @@ class BiometricProcessorTest {
         assertTrue(((BiometricScannerTest)bScn).isFingerScanned());
     }
 
+
+
+
     private class BiometricReaderTest implements BiometricReader {
         boolean Passportread = false;
 

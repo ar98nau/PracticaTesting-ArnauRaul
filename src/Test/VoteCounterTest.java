@@ -66,21 +66,21 @@ public class VoteCounterTest {
     }
 
     @Test
-    void countNullTest() {
+    void countNullTest() throws WrongInputException {
         assertEquals(0, counter.getVotesFor(counter.getNullParty()));
         counter.scrutinize(counter.getNullParty());
         assertEquals(1, counter.getVotesFor(counter.getNullParty()));
     }
 
     @Test
-    void countBlankTest() {
+    void countBlankTest() throws WrongInputException {
         assertEquals(0, counter.getVotesFor(counter.getBlankParty()));
         counter.scrutinize(counter.getBlankParty());
         assertEquals(1, counter.getVotesFor(counter.getBlankParty()));
     }
 
     @Test
-    void scrutinizeTest() {
+    void scrutinizeTest() throws WrongInputException {
         assertEquals(0, counter.getVotesFor(cup));
         counter.scrutinize(cup);
         assertEquals(1, counter.getVotesFor(cup));
@@ -92,6 +92,11 @@ public class VoteCounterTest {
 
         counter.scrutinize(counter.getBlankParty());
         assertEquals(1, counter.getNulls());
+    }
+
+    @Test
+    void WrongScrutinizeTest() {
+        assertThrows(WrongInputException.class, ()-> counter.scrutinize(new Party("patata")));
     }
 
 }
