@@ -36,9 +36,7 @@ public class BiometricProcessor {
         return bScanner;
     }
 
-    public BiometricSoftware getbSofware() {
-        return bSofware;
-    }
+    public BiometricSoftware getbSofware() { return bSoftware; }
 
     public boolean automaticVerification() throws BiometricVerificationFailedException {
         bDataPassport = bReader.readBiometricData();
