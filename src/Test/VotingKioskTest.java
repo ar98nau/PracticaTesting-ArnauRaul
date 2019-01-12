@@ -132,7 +132,7 @@ public class VotingKioskTest {
         terminal.setMailerService(mailService);
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
         assertTrue(((TestMailerService) mailService).wasSent());
-        assertEquals(((TestMailerService) mailService).recievedSign(), new DigitalSignature("1234567"));
+        assertEquals(((TestMailerService) mailService).recievedSign().toString(), new DigitalSignature("1234567").toString());
     }
 
 

@@ -1,18 +1,17 @@
 package main;
 
+import Exception.WrongInputException;
 import data.BiometricData;
-import data.MailAddress;
 import data.Nif;
 import kiosk.VotingKiosk;
-import Exception.WrongInputException;
 import services.ElectoralOrganism;
 import services.ElectoralOrganismImpl;
 import services.MailerService;
 import services.MailerServiceImpl;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.util.ArrayList;
 
 public class main {
@@ -60,8 +59,6 @@ public class main {
         System.out.println("Introdueix les dades Biomètriques: (escaneig facial i empremta dactilar");
         System.out.println("Le");
         BiometricData data = new BiometricData();
-        data = data.readBiometricData();
-        data.verifyBiometricData();
         System.out.println("Introdueix el teu DNI-e.           (El cens disponible es: ");
         for(Nif nifs : list){
             System.out.println(nifs.toString());
