@@ -39,20 +39,19 @@ class BiometricProcessorTest {
 
     @Test
     void setbSofwareTest() {
-        bProc.setbSofware(bSw);
+        bProc.setbSoftware(bSw);
         assertEquals(bSw, bProc.getbSofware());
     }
 
     @Test
     void automaticVerificationTest() throws BiometricVerificationFailedException {
-        bProc.setbSofware(bSw);
+        bProc.setbSoftware(bSw);
         bProc.setbReader(bRd);
         bProc.setbScanner(bScn);
-        boolean b = bProc.automaticVerification();
+        assertTrue(bProc.automaticVerification());
         assertTrue(((BiometricReaderTest)bRd).isReadPassport());
         assertTrue(((BiometricScannerTest)bScn).isFaceScanned());
         assertTrue(((BiometricScannerTest)bScn).isFingerScanned());
-
     }
 
     private class BiometricReaderTest implements BiometricReader {
