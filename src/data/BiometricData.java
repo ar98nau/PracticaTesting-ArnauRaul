@@ -1,9 +1,6 @@
 package data;
-import services.BiometricReader;
-import services.BiometricScanner;
-import services.BiometricSoftware;
 
-public class BiometricData implements BiometricReader, BiometricScanner, BiometricSoftware {
+final public class BiometricData {
 
     int faceKey;
     int fingerprintKey;
@@ -13,24 +10,27 @@ public class BiometricData implements BiometricReader, BiometricScanner, Biometr
         fingerprintKey = 0;
     }
 
+    public void setFaceKey(int key) {
+        faceKey = key;
+    }
 
-    @Override
-    public BiometricData readBiometricData() {
-        return null;
+    public void setFingerprintKey(int key) {
+        fingerprintKey = key;
+    }
+
+    public int getFaceKey() {
+        return faceKey;
+    }
+
+    public int getFingerprintKey() {
+        return fingerprintKey;
     }
 
     @Override
-    public void scanFace() {
-
-    }
-
-    @Override
-    public void scanFingerprint() {
-
-    }
-
-    @Override
-    public void verifyBiometricData() {
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BiometricData bio = (BiometricData) o;
+        return (bio.getFingerprintKey() == this.fingerprintKey) && (bio.getFaceKey() == this.faceKey);
     }
 }
