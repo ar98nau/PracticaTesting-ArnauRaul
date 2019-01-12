@@ -1,16 +1,15 @@
 package kiosk;
 
+import Exception.BiometricVerificationFailedException;
 import data.BiometricData;
 import services.BiometricReader;
 import services.BiometricScanner;
 import services.BiometricSoftware;
 
-import Exception.BiometricVerificationFailedException;
-
 public class BiometricProcessor {
     BiometricReader bReader;
     BiometricScanner bScanner;
-    BiometricSoftware bSofware;
+    BiometricSoftware bSoftware;
     BiometricData bDataPassport;
     BiometricData bData;
 
@@ -25,8 +24,8 @@ public class BiometricProcessor {
         this.bScanner = bScanner;
     }
 
-    public void setbSofware(BiometricSoftware bSofware) {
-        this.bSofware = bSofware;
+    public void setbSoftware(BiometricSoftware bSoftware) {
+        this.bSoftware = bSoftware;
     }
 
     public boolean automaticVerification() throws BiometricVerificationFailedException {
@@ -34,6 +33,6 @@ public class BiometricProcessor {
         bData.setFaceKey(bScanner.scanFace());
         bData.setFingerprintKey(bScanner.scanFingerprint());
 
-        return bSofware.verifyBiometricData(bDataPassport, bData);
+        return bSoftware.verifyBiometricData(bDataPassport, bData);
     }
 }

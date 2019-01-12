@@ -1,9 +1,12 @@
 package kiosk;
 
-import data.Party;
 import Exception.WrongInputException;
+import data.Party;
+
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * A class that represents the result in an election site
@@ -11,7 +14,7 @@ import java.util.*;
 
 public class VoteCounter {
     private BigDecimal totalVotes = BigDecimal.ZERO;
-    private HashMap <Party, BigDecimal> votes;
+    private HashMap<Party, BigDecimal> votes;
     private Party nullParty;
     private Party blankParty;
 

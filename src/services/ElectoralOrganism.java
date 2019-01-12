@@ -1,9 +1,9 @@
 package services;
 
+import Exception.WrongInputException;
 import data.DigitalSignature;
 import data.Nif;
 import data.Party;
-import Exception.WrongInputException;
 
 /**
  * External service for signing votes and manage the electoral roll
