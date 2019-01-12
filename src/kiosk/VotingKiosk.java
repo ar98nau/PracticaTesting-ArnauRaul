@@ -19,6 +19,7 @@ public class VotingKiosk {
 
 
     public VotingKiosk(){
+
     }
 
     public void setElectoralOrganism(ElectoralOrganism eO) { organism = (ElectoralOrganismImpl) eO; }
