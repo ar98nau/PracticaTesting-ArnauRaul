@@ -8,6 +8,7 @@ import Exception.WrongInputException;
 
 final public class Nif {
     private final String nif;
+    public BiometricData data;
 
     public Nif(String nif) throws WrongInputException {
         if (nif == null) throw new WrongInputException();
