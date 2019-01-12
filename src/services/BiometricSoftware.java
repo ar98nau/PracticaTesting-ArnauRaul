@@ -1,8 +1,8 @@
 package services;
 
 import Exception.BiometricVerificationFailedException;
-import data.Nif;
+import data.BiometricData;
 
 public interface BiometricSoftware {
-    void verifyBiometricData(Nif passport) throws BiometricVerificationFailedException;
+    boolean verifyBiometricData(BiometricData bPerson, BiometricData bPassport) throws BiometricVerificationFailedException;
 }
