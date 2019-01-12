@@ -11,30 +11,20 @@ import kiosk.VotingKiosk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ElectoralOrganism;
-import services.ElectoralOrganismImpl;
 import services.MailerService;
-import services.MailerServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VotingKioskTest {
     private VotingKiosk terminal;
     private ElectoralOrganism organism;
     private MailerService mailService;
-    private dataSet<Party> parties;
+    private VoteCounter counter;
     private ArrayList<Nif> nifs;
-    VoteCounter counter;
-
-    private Party pp;
-    private Party cs;
-    private Party erc;
-    private Party cup;
-    private Party vox;
-    private Party pdms;
-    private Party psc;
 
     private Nif nif1;
     private Nif nif2;
@@ -44,20 +34,41 @@ public class VotingKioskTest {
     private Nif nif6;
     private Nif nif7;
 
+    private Party pp = null;
+    private Party cs = null;
+    private Party erc = null;
+    private Party cup = null;
+    private Party vox = null;
+    private Party pdms = null;
+    private Party psc = null;
+
     @BeforeEach
     void init(){
-        {
-            try {
-                pp = new Party("PP");
-                cs = new Party("CS");
-                erc = new Party("ERC");
-                cup = new Party("CUP");
-                vox = new Party("VOX");
-                pdms = new Party("PODEMOS");
-                psc = new Party("PSC");
-            } catch (WrongInputException e) {
-                e.printStackTrace();
-            }
+        try {
+            pp = new Party("PP");
+            cs = new Party("CS");
+            erc = new Party("ERC");
+            cup = new Party("CUP");
+            vox = new Party("VOX");
+            pdms = new Party("PODEMOS");
+            psc = new Party("PSC");
+        } catch (WrongInputException e) {
+            e.printStackTrace();
+        }
+
+        dataSet<Party> parties = new dataSet<>();
+        parties.add(pp);
+        parties.add(cs);
+        parties.add(erc);
+        parties.add(cup);
+        parties.add(vox);
+        parties.add(pdms);
+        parties.add(psc);
+
+        try {
+            counter = new TestVoteCounter(parties);
+        } catch (WrongInputException e) {
+            e.printStackTrace();
         }
 
         {
@@ -74,20 +85,6 @@ public class VotingKioskTest {
             }
         }
 
-        parties = new dataSet<Party>();
-        parties.add(pp);
-        parties.add(cs);
-        parties.add(erc);
-        parties.add(cup);
-        parties.add(vox);
-        parties.add(pdms);
-        parties.add(psc);
-        try {
-            counter = new VoteCounter(parties);
-        } catch (WrongInputException e) {
-            e.printStackTrace();
-        }
-
         nifs = new ArrayList<Nif>();
         nifs.add(nif1);
         nifs.add(nif2);
@@ -98,12 +95,9 @@ public class VotingKioskTest {
         nifs.add(nif7);
 
         terminal = new VotingKiosk();
-        try {
-            organism = new ElectoralOrganismImpl(counter, nifs);
-        } catch (WrongInputException e) {
-            e.printStackTrace();
-        }
-        mailService = new MailerServiceImpl();
+
+        organism = new TestElectoralOrganism();
+        mailService = new TestMailerService();
     }
 
     @Test
@@ -119,30 +113,26 @@ public class VotingKioskTest {
     }
 
     @Test
-    void voteTest() {
-        TestVoteCounter counterTest = null;
-        ElectoralOrganism organismTest = null;
-        try {
-            counterTest = new TestVoteCounter(parties);
-            organismTest = new ElectoralOrganismImpl(counterTest, nifs);
-        } catch (WrongInputException e) {
-            e.printStackTrace();
-        }
-        terminal.setElectoralOrganism(organismTest);
-        terminal.vote(cup);
-        assertTrue(counterTest.wasScrutinized());
+    void setVoteCounterTest() {
+        terminal.setVoteCounter(counter);
+        assertEquals(counter, terminal.getCounter());
+    }
 
+    @Test
+    void voteTest() {
+        terminal.setElectoralOrganism(organism);
+        terminal.setVoteCounter(counter);
+        terminal.vote(cup);
+        assertTrue(((TestVoteCounter)counter).wasScrutinized());
     }
 
     @Test
     void sendeReceiptTest() throws WrongInputException {
-        TestElectoralOrganismImpl organismTest = new TestElectoralOrganismImpl(counter, nifs);
-        TestMailerServiceImpl mailerTest = new TestMailerServiceImpl();
-        terminal.setElectoralOrganism(organismTest);
-        terminal.setMailerService(mailerTest);
+        terminal.setElectoralOrganism(organism);
+        terminal.setMailerService(mailService);
         terminal.sendeReceipt(new MailAddress("test@gmail.com"));
-        assertTrue(mailerTest.wasSent());
-        assertEquals(mailerTest.recievedSign(), new DigitalSignature("1234567"));
+        assertTrue(((TestMailerService) mailService).wasSent());
+        assertEquals(((TestMailerService) mailService).recievedSign(), new DigitalSignature("1234567"));
     }
 
 
@@ -153,6 +143,7 @@ public class VotingKioskTest {
             super(validParties);
         }
 
+        @Override
         public void scrutinize(Party party) {
             scrutinized = true;
         }
@@ -162,10 +153,19 @@ public class VotingKioskTest {
         }
     }
 
-    private class TestElectoralOrganismImpl extends ElectoralOrganismImpl{
+    private class TestElectoralOrganism implements ElectoralOrganism{
 
-        public TestElectoralOrganismImpl(VoteCounter inputCounter, ArrayList<Nif> nifs) throws WrongInputException {
-            super(inputCounter, nifs);
+        public TestElectoralOrganism() {
+        }
+
+        @Override
+        public boolean canVote(Nif nif) {
+            return false;
+        }
+
+        @Override
+        public void disableVoter(Nif nif) {
+
         }
 
         public DigitalSignature askForDigitalSignature(Party party) throws WrongInputException {
@@ -173,10 +173,21 @@ public class VotingKioskTest {
         }
     }
 
-    private class TestMailerServiceImpl extends MailerServiceImpl{
+    private class classMailerService implements MailerService{
+
+        @Override
+        public void send(MailAddress address, DigitalSignature signature) {
+        }
+    }
+
+    private class TestMailerService extends classMailerService{
         boolean sent = false;
         private DigitalSignature recievedSign;
 
+        public TestMailerService() {
+        }
+
+        @Override
         public void send(MailAddress address, DigitalSignature signature) {
             sent = true;
             recievedSign = signature;
