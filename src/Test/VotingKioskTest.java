@@ -173,14 +173,7 @@ public class VotingKioskTest {
         }
     }
 
-    private class classMailerService implements MailerService{
-
-        @Override
-        public void send(MailAddress address, DigitalSignature signature) {
-        }
-    }
-
-    private class TestMailerService extends classMailerService{
+    private class TestMailerService implements MailerService{
         boolean sent = false;
         private DigitalSignature recievedSign;
 
